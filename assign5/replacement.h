@@ -21,7 +21,14 @@ class Replacement
 protected:      // subclasses can access these members
     // Member variable for the page table
     PageTable page_table;
-	// TODO: Add additional member variables to this class
+	// Add these to the protected section of the Replacement class in replacement.h
+    int num_pages;        
+    int num_frames;        
+    int free_frames;        
+    int num_references;     
+    int num_page_faults;   
+    int num_page_replacements; 
+
 	
 public:
 	/**
