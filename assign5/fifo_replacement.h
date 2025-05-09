@@ -14,6 +14,7 @@
 
 #include "replacement.h"
 #include <queue>
+#include <algorithm>
 
 /**
  * @brief A class to simulate FIFO page replacement algorithm.

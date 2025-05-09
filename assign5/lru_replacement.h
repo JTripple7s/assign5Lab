@@ -14,6 +14,7 @@
 
 #include "replacement.h"
 #include <list>
+#include <algorithm>
 
 /**
  * @brief A class to simulate the least recently used (LRU) page replacement algorithm.

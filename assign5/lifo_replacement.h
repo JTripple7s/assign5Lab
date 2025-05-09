@@ -14,6 +14,7 @@
 
 #include "replacement.h"
 #include <stack>
+#include <algorithm>
 
 /**
  * @brief A class to simulate LIFO (last in first out) page replacement algorithm.

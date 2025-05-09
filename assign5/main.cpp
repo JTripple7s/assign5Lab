@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
     //Print basic information about the program
     std::cout << "=================================================================" << std::endl;
     std::cout << "CS 433 Programming assignment 5" << std::endl;
-    std::cout << "Author: xxxxxx and xxxxxxx" << std::endl;
+    std::cout << "Author: Joel Burlingame" << std::endl;
     std::cout << "Date: xx/xx/20xx" << std::endl;
     std::cout << "Course: CS433 (Operating Systems)" << std::endl;
     std::cout << "Description : Program to simulate different page replacement algorithms" << std::endl;
@@ -112,15 +112,33 @@ int main(int argc, char *argv[]) {
     std::cout << "****************Simulate FIFO replacement****************************" << std::endl;
     // TODO: Add your code to calculate number of page faults using FIFO replacement algorithm
     // TODO: print the statistics and run-time
+    std::cout << "Creating FIFO VM..." << std::endl;
     FIFOReplacement fifo_vm(num_pages, num_frames);
+    std::cout << "Starting FIFO simulation..." << std::endl;
+    std::cout << "Setting up clock..." << std::endl;
     auto fifo_start = std::chrono::high_resolution_clock::now();
+    std::cout << "Clock started." << std::endl;
 
+    std::cout << "Starting loop with " << large_refs.size() << " references..." << std::endl;
+    int count = 0;
     for (std::vector<int>::const_iterator it = large_refs.begin(); it != large_refs.end(); ++it) {
+        if (count == 0) {
+            std::cout << "Processing first reference..." << std::endl;
+        }
         int page_num = (*it) >> page_offset_bits;
+        std::cout << "Accessing page " << page_num << "..." << std::endl;
         fifo_vm.access_page(page_num, 0);
+        count++;
+        if (count == 1) {
+            std::cout << "First reference processed successfully." << std::endl;
+        }
+        if (count % 1000 == 0) {
+            std::cout << "Processed " << count << " references..." << std::endl;
+        }
     }
+    std::cout << "FIFO simulation completed." << std::endl;
     auto fifo_end = std::chrono::high_resolution_clock::now();
-    
+
     std::chrono::duration<double> fifo_duration = fifo_end - fifo_start;
     fifo_vm.print_statistics();
     std::cout << "Run time: " << fifo_duration.count() << " seconds" << std::endl;
