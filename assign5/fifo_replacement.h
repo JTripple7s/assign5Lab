@@ -51,4 +51,7 @@ public:
      */
     virtual int replace_page(int page_num);
 
+    int get_free_frames() const { return free_frames; }
+
+
 };

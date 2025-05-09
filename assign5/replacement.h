@@ -10,6 +10,8 @@
 #pragma once
 
 #include "pagetable.h"
+#include <unordered_set>
+#include <queue>
 
 
 /**
@@ -28,6 +30,9 @@ protected:      // subclasses can access these members
     int num_references;     
     int num_page_faults;   
     int num_page_replacements; 
+
+    std::queue<int> free_frame_queue;
+    std::unordered_set<int> used_frames;
 
 	
 public:

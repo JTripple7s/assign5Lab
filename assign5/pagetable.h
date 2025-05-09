@@ -48,7 +48,6 @@ public:
     // Destructor
     ~PageTable();
 
-	// TODO: Add your implementation of the page table here
 
     /**
      * @brief Access a page in the page table.

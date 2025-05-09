@@ -6,6 +6,7 @@
 #include <cmath>
 #include <vector>
 #include <chrono>
+#include <iomanip>
 
 #include "fifo_replacement.h"
 #include "lru_replacement.h"
@@ -95,6 +96,8 @@ int main(int argc, char *argv[]) {
     vm.print_statistics();
 
     // Test 2: Read and simulate the large list of logical addresses from the input file "large_refs.txt"
+   // In main.cpp, update the Test 2 section:
+
     std::cout << "\n================================Test 2==================================================\n";
 
     in.open("large_refs.txt");
@@ -109,43 +112,23 @@ int main(int argc, char *argv[]) {
     }
     in.close();
 
+    std::cout << "Total number of references: " << large_refs.size() << std::endl;
+
     std::cout << "****************Simulate FIFO replacement****************************" << std::endl;
-    // TODO: Add your code to calculate number of page faults using FIFO replacement algorithm
-    // TODO: print the statistics and run-time
-    std::cout << "Creating FIFO VM..." << std::endl;
     FIFOReplacement fifo_vm(num_pages, num_frames);
-    std::cout << "Starting FIFO simulation..." << std::endl;
-    std::cout << "Setting up clock..." << std::endl;
     auto fifo_start = std::chrono::high_resolution_clock::now();
-    std::cout << "Clock started." << std::endl;
 
-    std::cout << "Starting loop with " << large_refs.size() << " references..." << std::endl;
-    int count = 0;
     for (std::vector<int>::const_iterator it = large_refs.begin(); it != large_refs.end(); ++it) {
-        if (count == 0) {
-            std::cout << "Processing first reference..." << std::endl;
-        }
         int page_num = (*it) >> page_offset_bits;
-        std::cout << "Accessing page " << page_num << "..." << std::endl;
         fifo_vm.access_page(page_num, 0);
-        count++;
-        if (count == 1) {
-            std::cout << "First reference processed successfully." << std::endl;
-        }
-        if (count % 1000 == 0) {
-            std::cout << "Processed " << count << " references..." << std::endl;
-        }
     }
-    std::cout << "FIFO simulation completed." << std::endl;
-    auto fifo_end = std::chrono::high_resolution_clock::now();
 
+    auto fifo_end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> fifo_duration = fifo_end - fifo_start;
     fifo_vm.print_statistics();
-    std::cout << "Run time: " << fifo_duration.count() << " seconds" << std::endl;
+    std::cout << "Elapsed time = " << fifo_duration.count() << " seconds" << std::endl;
 
     std::cout << "****************Simulate LIFO replacement****************************" << std::endl;
-    // TODO: Add your code to calculate number of page faults using LIFO replacement algorithm
-    // TODO: print the statistics and run-time
     LIFOReplacement lifo_vm(num_pages, num_frames);
     auto lifo_start = std::chrono::high_resolution_clock::now();
 
@@ -153,15 +136,13 @@ int main(int argc, char *argv[]) {
         int page_num = (*it) >> page_offset_bits;
         lifo_vm.access_page(page_num, 0);
     }
-    auto lifo_end = std::chrono::high_resolution_clock::now();
 
+    auto lifo_end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> lifo_duration = lifo_end - lifo_start;
     lifo_vm.print_statistics();
-    std::cout << "Run time: " << lifo_duration.count() << " seconds" << std::endl;
+    std::cout << "Elapsed time = " << lifo_duration.count() << " seconds" << std::endl;
 
     std::cout << "****************Simulate LRU replacement****************************" << std::endl;
-    // TODO: Add your code to calculate number of page faults using LRU replacement algorithm
-    // TODO: print the statistics and run-time
     LRUReplacement lru_vm(num_pages, num_frames);
     auto lru_start = std::chrono::high_resolution_clock::now();
 
@@ -169,10 +150,10 @@ int main(int argc, char *argv[]) {
         int page_num = (*it) >> page_offset_bits;
         lru_vm.access_page(page_num, 0);
     }
-    auto lru_end = std::chrono::high_resolution_clock::now();
 
+    auto lru_end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> lru_duration = lru_end - lru_start;
     lru_vm.print_statistics();
-    std::cout << "Run time: " << lru_duration.count() << " seconds" << std::endl;
+    std::cout << "Elapsed time = " << lru_duration.count() << " seconds" << std::endl;
 
 }
