@@ -1,7 +1,7 @@
 /**
 * Assignment 5: Page replacement algorithms
  * @file fifo_replacement.h
- * @author ??? (TODO: your name)
+ * @author Joel Burlingame
  * @brief A class implementing the FIFO page replacement algorithms
  * @version 0.1
  */
@@ -13,13 +13,14 @@
 // Remember to add comments to your code
 
 #include "replacement.h"
+#include <queue>
 
 /**
  * @brief A class to simulate FIFO page replacement algorithm.
  */
 class FIFOReplacement : public Replacement {
 private:
-    // TODO: Add necessary member variables to this class
+    std::queue<int> fifo_queue;
 
 public:
     /**

@@ -1,7 +1,7 @@
 /**
 * Assignment 5: Page replacement algorithms
  * @file fifo_replacement.cpp
- * @author ??? (TODO: your name)
+ * @author Joel Burlingame
  * @brief A class implementing the FIFO page replacement algorithms
  * @version 0.1
  */
@@ -24,11 +24,37 @@ FIFOReplacement::~FIFOReplacement() {
 
 // Access an invalid page, but free frames are available
 void FIFOReplacement::load_page(int page_num) {
-    // TODO: Update your data structure FIFO replacement and pagetable
+   int frame = 0;
+   while (frame < num_frames){
+    bool frame_in_use = false;
+
+    for(int i = 0; i < num_pages; i++){
+        if(page_table[i].valid && page_table[i].frame_num == frame){
+            frame_in_use = true;
+            break;
+        }
+    }
+    if(!frame_in_use){
+        break;
+    }
+    frame++;
+
+   }
+   page_table[page_num].frame_num = frame;
+   page_table[page_num].valid = true;
+
+   fifo_queue.push(page_num);
 }
 
 // Access an invalid page and no free frames are available
 int FIFOReplacement::replace_page(int page_num) {
-    // TODO: Update your data structure FIFO replacement and pagetable
-    return 0;
+    int victim_page = fifo_queue.front();
+    fifo_queue.pop();
+
+    int frame = page_table[victim_page].frame_num;
+    page_table[page_num].frame_num = frame;
+    page_table[page_num].valid = true;
+
+    fifo_queue.push(page_num);
+    return victim_page;
 }

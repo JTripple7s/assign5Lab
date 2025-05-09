@@ -1,7 +1,7 @@
 /**
 * Assignment 5: Page replacement algorithms
  * @file lru_replacement.h
- * @author ??? (TODO: your name)
+ * @author Joel Burlingame
  * @brief A class implementing the LRU page replacement algorithms
  * @version 0.1
  */
@@ -13,13 +13,16 @@
 // Remember to add comments to your code
 
 #include "replacement.h"
+#include <list>
 
 /**
  * @brief A class to simulate the least recently used (LRU) page replacement algorithm.
  */
 class LRUReplacement : public Replacement
 {
-	// TODO: Add your implementation to this class
+private:
+    std::list<int> lru_list;
+
 public:
 	/**
 	 * @brief Constructor
